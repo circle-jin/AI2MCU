@@ -1,0 +1,5 @@
+{
+    "input_model_type" : "onnx",
+    "input_model_name" : "yolov5_test",
+    "input_model_path" : "./best.onnx"
+}
