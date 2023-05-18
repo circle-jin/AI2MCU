@@ -1,5 +1,6 @@
 import argparse
 import json
+from src.convert.onnx2drpai import Onnx2Drpai
 from src.models.onnx_model import OnnxModel
 
 def parse_args() -> argparse.Namespace:
@@ -40,18 +41,23 @@ def main():
             input_model_name = config.get('input_model_name')
             input_model_path = config.get('input_model_path')
             
-            if config.get('input_model_type', None) == None:
-                """
-                if the argument is None
-                """
-                print("mode == None, usage: main.py [-h]")
-                return
-            if 'onnx' == config.get('input_model_type'):
-                print('[onnx] start')
-                onnx_crop = OnnxModel()
-                onnx_crop.load_model(input_model_name, input_model_path)
-                onnx_crop.crop_end_of_onnx_model()
-                print('[onnx] finish')
+            if config.get('use_crop', None) == True:
+                if config.get('input_model_type', None) == None:
+                    """
+                    if the argument is None
+                    """
+                    print("mode == None, usage: main.py [-h]")
+                    return
+                if 'onnx' == config.get('input_model_type'):
+                    print('[onnx] start')
+                    onnx_crop = OnnxModel()
+                    onnx_crop.load_model(input_model_name, input_model_path)
+                    onnx_crop.crop_end_of_onnx_model()
+                    print('[onnx] finish')
+                    
+            if config.get('use_convert', None) == True: 
+                renesas = Onnx2Drpai("./dfdf")
+                renesas.convert('v2m')
 
 if __name__ == '__main__':
     main()
