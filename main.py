@@ -26,7 +26,7 @@ def print_json_information(config_json):
     """
     if config_json is not None:
         print('------------------------------------------')
-        print("[Input file information]")
+        print("[Input File Information]")
 
         for key, value in config_json.items():
             print(f'   {key} : {value}')
@@ -37,27 +37,36 @@ def main():
     if args.config_file is not None:
         if '.json' in args.config_file:
             config = json.load(open(args.config_file))
-            print_json_information(config)
-            input_model_name = config.get('input_model_name')
-            input_model_path = config.get('input_model_path')
             
+            input_error = "Please write the contents of the json file like json/exmaple.json"
+            print_json_information(config)
             if config.get('use_crop', None) == True:
-                if config.get('input_model_type', None) == None:
-                    """
-                    if the argument is None
-                    """
-                    print("mode == None, usage: main.py [-h]")
+                crop_config = config.get('crop', None)
+                if crop_config == None:
+                    print("[Error] crop == None, " + input_error)
                     return
-                if 'onnx' == config.get('input_model_type'):
-                    print('[onnx] start')
+                print('[Crop Start]')
+                input_model_name = crop_config.get('input_model_name')
+                input_model_path = crop_config.get('input_model_path')
+                if 'onnx' == crop_config.get('input_model_type'):
                     onnx_crop = OnnxModel()
                     onnx_crop.load_model(input_model_name, input_model_path)
                     onnx_crop.crop_end_of_onnx_model()
-                    print('[onnx] finish')
+                print('[Crop Finish]')
+                    
+            convert_config = config.get('convert', None)
                     
             if config.get('use_convert', None) == True: 
-                renesas = Onnx2Drpai("./dfdf")
-                renesas.convert('v2m')
+                convert_config = config.get('convert', None)
+                if convert_config == None:
+                    print("[Error] convert == None, " + input_error)
+                    return
+                print('[Convert Start]')
+                target_device = convert_config.get('target_device')
+                output_path = convert_config.get('output_path')
+                renesas = Onnx2Drpai(output_path)
+                renesas.convert(target_device)
+                print('[Convert Finish]')
 
 if __name__ == '__main__':
     main()

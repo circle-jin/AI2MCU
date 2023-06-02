@@ -13,10 +13,8 @@ class Onnx2Drpai(Ai2Mcu):
         
         for model_path in self.crop_models_path:
             convert_command = f"python3 run_translator_input_image_yolov5_bbox_aimcu_script_onnxname.py {model_path} {device_type}"
-            print(convert_command)
+            print(f"Converting model {model_path}")
             convert_stream = subprocess.Popen(convert_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             convert_stdout, convert_stderr = convert_stream.communicate()
             convert_stream.wait(None)
             convert_exit_code = convert_stream.returncode
-            
-        return

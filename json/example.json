@@ -1,7 +1,14 @@
 {
-    "use_crop" : false, 
-    "input_model_type" : "onnx",
-    "input_model_name" : "iris_mobilenet_64_remove_topk",
-    "input_model_path" : "./iris_mobilenet_64_64_remove_topk.onnx",
-    "use_convert" : true
+    "use_crop" : true,
+    "use_convert" : true,
+    "crop":{
+        "input_model_type" : "onnx",
+        "input_model_name" : "conv_sigmoid_crop.onnx",
+        "input_model_path" : "./conv_sigmoid_crop.onnx"
+    },
+
+    "convert":{
+        "target_device" : "v2l",
+        "output_path" : "./convert_output"
+    }
 }
