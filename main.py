@@ -1,5 +1,4 @@
-import argparse
-import json
+import argparse, json
 from src.convert.onnx2drpai import Onnx2Drpai
 from src.models.onnx_model import OnnxModel
 

@@ -3,12 +3,12 @@
     "use_convert" : true,
     "crop":{
         "input_model_type" : "onnx",
-        "input_model_name" : "conv_sigmoid_crop.onnx",
-        "input_model_path" : "./conv_sigmoid_crop.onnx"
+        "input_model_name" : "yolov5s_NPNet1",
+        "input_model_path" : "/root/yolov5s_NPNet1.onnx"
     },
 
     "convert":{
         "target_device" : "v2l",
-        "output_path" : "./convert_output"
+        "output_path" : "It is not yet supported."
     }
 }
