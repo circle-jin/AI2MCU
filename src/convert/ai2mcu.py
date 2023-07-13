@@ -20,8 +20,11 @@ class Ai2Mcu:
             self.crop_models_path.append(path)
         
         # Sort by first digit in model name in ascending order
-        self.crop_models_path = sorted(self.crop_models_path, 
-                                       key=lambda x: int(x.split('/')[-1].split('_')[0]))
+        try:
+            self.crop_models_path = sorted(self.crop_models_path, 
+                                        key=lambda x: int(x.split('/')[-1].split('_')[0]))
+        except Exception:
+            pass
 
     def convert(self):
         return

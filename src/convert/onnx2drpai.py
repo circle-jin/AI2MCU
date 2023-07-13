@@ -19,10 +19,13 @@ class Onnx2Drpai(Ai2Mcu):
             
             # Check the convert result
             model_name = model_path.split('/')[-1]
-            convert_result_folder_path = f'/root/drp-ai_translator_release/output/{model_name}'
-            file_list = os.listdir(convert_result_folder_path)
-            file_count = len(file_list)
-            
+            try:
+                convert_result_folder_path = f'/root/drp-ai_translator_release/output/{model_name}'
+                file_list = os.listdir(convert_result_folder_path)
+                file_count = len(file_list)
+            except FileNotFoundError:
+                raise Exception("The converted model cannot be found.")
+                
             RED = "\033[91m"
             GREEN = "\033[32m"
             RESET = "\033[0m"
