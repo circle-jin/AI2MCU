@@ -4,6 +4,7 @@ To run this, you will need to have the DRP-AI-Translator installed as well.
 """
 import os, subprocess
 from src.convert.ai2mcu import Ai2Mcu
+from src.convert.drp_ai_translator import DRPAIConverter
 
 class Onnx2Drpai(Ai2Mcu):
     def __init__(self, output_path :str):
@@ -12,11 +13,10 @@ class Onnx2Drpai(Ai2Mcu):
     def convert(self, device_type :str):
         python_file_path = os.path.dirname(os.path.abspath(__file__))
         for model_path in self.crop_models_path:
-            script_path = python_file_path + "/run_drp_ai_translator.py"
-            convert_command = f"python3 {script_path} {model_path} {device_type}"
-            convert_stream = subprocess.Popen(convert_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            convert_stdout, convert_stderr = convert_stream.communicate()
             
+            convert = DRPAIConverter(model_path)
+            convert.convert_onnx_to_drpai()
+
             # Check the convert result
             model_name = model_path.split('/')[-1]
             try:
@@ -35,5 +35,3 @@ class Onnx2Drpai(Ai2Mcu):
             else:
                 print(RED + 'Failed' + RESET)
             
-            convert_stream.wait(None)
-            convert_exit_code = convert_stream.returncode
