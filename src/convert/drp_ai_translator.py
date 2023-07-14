@@ -106,7 +106,7 @@ class DRPAIConverter:
             self.drp_input_name,
             shape=tuple(input_shape),
             order=order,
-            type="uint8",
+            type="fp16",
             format="RGB",
         )
 
@@ -120,11 +120,10 @@ class DRPAIConverter:
             
             input_shape, order = self._convert_NCHW_to_NHWC(input_shape)
             
-            # Add pre-processing to cast_fp16 and nomalize
             input_pre_sequence.extend(
-                [drp_ai.cast_any_to_fp16()]
+                [drp_ai.memcopy(WORD_SIZE=2) ]
             )
-
+            
             # Set drp_prepost processing sequence
             self.drp_prepost.set_preprocess_sequence(
                 src=[self.drp_input_name], dest=[input_name], pp_seq=input_pre_sequence
