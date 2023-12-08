@@ -82,8 +82,8 @@ class DRPAIConverter:
             order = "HWC"
             nhwc = [nchw[1], nchw[2], nchw[0]]
         elif len(nchw) == 2:
-            order = "HW"
-            nhwc = [nchw[1], nchw[0]]
+            order = "C"
+            nhwc = [nchw[1]]
         elif len(nchw) == 1:
             nhwc = [nchw[0]]
             order = "C"
